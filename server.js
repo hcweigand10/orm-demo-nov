@@ -12,6 +12,9 @@ app.use(express.urlencoded({ extended: true }));
 const userRoutes = require("./controllers/userController");
 app.use('/api/users', userRoutes);
 
+const superpowerRoutes = require("./controllers/superpowerController");
+app.use('/api/superpowers', superpowerRoutes);
+
 // Force true to drop/recreate table(s) on every sync
 sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log(`Now listening on ${PORT}`));
