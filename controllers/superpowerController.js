@@ -4,7 +4,7 @@ const {User, Superpower} = require("../models");
 
 // GET route
 router.get("/", (req, res)=>{
-    Superpower.findAll()
+    Superpower.findAll({include: User})
     .then((allSuperpowers)=>{
         res.json(allSuperpowers);
     })

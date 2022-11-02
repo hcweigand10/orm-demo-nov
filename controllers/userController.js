@@ -5,7 +5,7 @@ const {User, Superpower} = require("../models");
 
 // GET route
 router.get("/", (req, res)=>{
-    User.findAll()
+    User.findAll({include: Superpower})
     .then((allUsers)=>{
         res.json(allUsers);
     })
@@ -19,8 +19,14 @@ router.get("/", (req, res)=>{
 router.post("/", (req, res)=> {
     console.log(req.body)
     User.create(req.body)
-    .then((data)=>{
-        res.json(data)
+    .then((newUser)=>{
+        if (req.body.superpower_ids && req.body.superpower_ids.length > 0) {
+            newUser.addSuperpowers(req.body.superpower_ids).then(response => {
+                res.json(response)
+            })
+        } else {
+            res.json(data)
+        }
     })
     .catch((err)=>{
         console.log(err)
